@@ -12,8 +12,15 @@ const VERIFY_WORKER_URL = 'https://accord-vi-verify.accordbccmvi.workers.dev';
 // asks the worker to email a 6-digit code, then reveals stage 2 for entering
 // it. Only a correct code makes the worker send the real notification to us —
 // junk/typo'd emails never reach our inbox.
+function setNote(note, text, kind) {
+  note.textContent = text;
+  note.classList.remove('is-error', 'is-success');
+  if (kind) note.classList.add(kind);
+}
+
 function wireEmailForm({ form, note, stage1, stage2, codeInput, verifyBtn, buildDetails }) {
   const emailField = form.querySelector('[name="email"]');
+  const submitBtn = form.querySelector('button[type="submit"]');
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -21,7 +28,8 @@ function wireEmailForm({ form, note, stage1, stage2, codeInput, verifyBtn, build
     if (detailsField && buildDetails) detailsField.value = buildDetails();
 
     const payload = Object.fromEntries(new FormData(form).entries());
-    note.textContent = 'Sending you a verification code…';
+    setNote(note, 'Sending you a verification code…');
+    submitBtn.disabled = true;
 
     fetch(`${VERIFY_WORKER_URL}/request-code`, {
       method: 'POST',
@@ -31,20 +39,27 @@ function wireEmailForm({ form, note, stage1, stage2, codeInput, verifyBtn, build
       .then((res) => res.json())
       .then((data) => {
         if (!data.ok) throw new Error(data.error || 'Could not send code');
-        note.textContent = `We've emailed a code to ${emailField.value}. Enter it below to confirm.`;
+        setNote(note, `We've emailed a code to ${emailField.value}. Enter it below to confirm.`, 'is-success');
         stage1.hidden = true;
         stage2.hidden = false;
         codeInput.focus();
       })
       .catch((err) => {
-        note.textContent = err.message || 'Something went wrong — please try again.';
+        setNote(note, err.message || 'Something went wrong — please try again.', 'is-error');
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
       });
   });
 
   verifyBtn.addEventListener('click', () => {
     const code = codeInput.value.trim();
-    if (!code) return;
-    note.textContent = 'Checking…';
+    if (!code) {
+      setNote(note, 'Enter the 6-digit code first.', 'is-error');
+      return;
+    }
+    setNote(note, 'Checking…');
+    verifyBtn.disabled = true;
 
     fetch(`${VERIFY_WORKER_URL}/verify-code`, {
       method: 'POST',
@@ -54,12 +69,15 @@ function wireEmailForm({ form, note, stage1, stage2, codeInput, verifyBtn, build
       .then((res) => res.json())
       .then((data) => {
         if (!data.ok) throw new Error(data.error || 'Incorrect code');
-        note.textContent = "Thanks — you're confirmed! We've received this.";
+        setNote(note, "Thanks — you're confirmed! We've received this.", 'is-success');
         stage2.hidden = true;
         form.reset();
       })
       .catch((err) => {
-        note.textContent = err.message || 'Incorrect code — please try again.';
+        setNote(note, err.message || 'Incorrect code — please try again.', 'is-error');
+      })
+      .finally(() => {
+        verifyBtn.disabled = false;
       });
   });
 }
