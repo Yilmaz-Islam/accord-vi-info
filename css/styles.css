@@ -501,11 +501,73 @@ ul { list-style: none; }
 }
 
 .tier-title {
-  border-color: var(--color-primary);
+  border: 2px solid var(--color-primary);
   background: linear-gradient(160deg, var(--color-surface), var(--color-bg-alt));
 }
 
 .tier-badge-title { background: var(--color-primary); color: #211a05; }
+
+/* Animated gold border-beam, scaled by tier: Platinum (title sponsor) gets
+   the full treatment — a tighter, faster beam plus a light shimmer sweep,
+   echoing the president/director card treatment on the immersive site.
+   Gold gets a dimmer, slower beam only; Bronze/Silver/Diamond stay plain. */
+@property --tier-beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.tier-featured, .tier-title { position: relative; overflow-x: hidden; }
+
+.tier-featured::after, .tier-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from var(--tier-beam-angle), transparent 0deg, transparent 300deg, var(--color-primary) 340deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: tier-beam-spin 9s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.tier-title::after {
+  padding: 2.5px;
+  background: conic-gradient(from var(--tier-beam-angle), transparent 0deg, transparent 270deg, var(--color-bg) 315deg, var(--color-primary) 335deg, transparent 360deg);
+  animation-duration: 6.5s;
+}
+@keyframes tier-beam-spin { to { --tier-beam-angle: 360deg; } }
+
+.tier-title::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 38%, rgba(224, 180, 85, 0.5) 46%, rgba(224, 180, 85, 0.85) 50%, rgba(224, 180, 85, 0.5) 54%, transparent 62%);
+  transform: translateX(-130%);
+  animation: tier-shimmer 6.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes tier-shimmer {
+  0% { transform: translateX(-130%); }
+  37% { transform: translateX(130%); }
+  100% { transform: translateX(130%); }
+}
+
+.tier-badge { z-index: 2; }
+.tier-featured .tier-name, .tier-featured .tier-price, .tier-featured .tier-blurb, .tier-featured .tier-list,
+.tier-title .tier-name, .tier-title .tier-price, .tier-title .tier-blurb, .tier-title .tier-list {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tier-featured::after, .tier-title::after, .tier-title::before {
+    animation: none;
+  }
+}
 
 .tier-name {
   display: block;
