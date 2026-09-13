@@ -524,8 +524,14 @@ ul { list-style: none; }
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 2px;
-  background: conic-gradient(from var(--tier-beam-angle), transparent 0deg, transparent 300deg, var(--color-primary) 340deg, transparent 360deg);
+  padding: 1.5px;
+  background: conic-gradient(from var(--tier-beam-angle),
+    transparent 0deg,
+    transparent 260deg,
+    var(--color-primary-dark) 300deg,
+    var(--color-primary) 330deg,
+    var(--color-primary-dark) 350deg,
+    transparent 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -534,9 +540,16 @@ ul { list-style: none; }
   z-index: 0;
 }
 .tier-title::after {
-  padding: 2.5px;
-  background: conic-gradient(from var(--tier-beam-angle), transparent 0deg, transparent 270deg, var(--color-bg) 315deg, var(--color-primary) 335deg, transparent 360deg);
-  animation-duration: 6.5s;
+  padding: 2px;
+  background: conic-gradient(from var(--tier-beam-angle),
+    transparent 0deg,
+    transparent 230deg,
+    var(--color-bg) 260deg,
+    var(--color-primary-dark) 300deg,
+    var(--color-primary) 330deg,
+    var(--color-primary-dark) 350deg,
+    transparent 360deg);
+  animation-duration: 7s;
 }
 @keyframes tier-beam-spin { to { --tier-beam-angle: 360deg; } }
 
@@ -544,9 +557,9 @@ ul { list-style: none; }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, transparent 38%, rgba(224, 180, 85, 0.5) 46%, rgba(224, 180, 85, 0.85) 50%, rgba(224, 180, 85, 0.5) 54%, transparent 62%);
+  background: linear-gradient(100deg, transparent 42%, rgba(224, 180, 85, 0.3) 48%, rgba(224, 180, 85, 0.55) 50%, rgba(224, 180, 85, 0.3) 52%, transparent 58%);
   transform: translateX(-130%);
-  animation: tier-shimmer 6.5s ease-in-out infinite;
+  animation: tier-shimmer 7s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
 }
@@ -1006,6 +1019,5 @@ ul { list-style: none; }
   .nav-cta { margin-top: 0; padding: 0.6rem 1.3rem; font-size: 0.9rem; }
 
   .tier-grid { grid-template-columns: repeat(3, 1fr); }
-  .tier-title { grid-column: span 3; }
   .gallery-grid { grid-template-columns: repeat(3, 1fr); }
 }
