@@ -3,6 +3,67 @@
 // Shared across index.html / register.html / sponsor.html — every block below
 // guards for missing elements since no single page has all of them.
 
+// Email verification worker — see accord-vi-verify-worker/.
+// prod: swap for the deployed worker's real URL once ALLOWED_ORIGINS there
+// includes the production site origin too.
+const VERIFY_WORKER_URL = 'https://accord-vi-verify.accordbccmvi.workers.dev';
+
+// Shared two-step flow for the register and sponsor forms: submitting stage 1
+// asks the worker to email a 6-digit code, then reveals stage 2 for entering
+// it. Only a correct code makes the worker send the real notification to us —
+// junk/typo'd emails never reach our inbox.
+function wireEmailForm({ form, note, stage1, stage2, codeInput, verifyBtn, buildDetails }) {
+  const emailField = form.querySelector('[name="email"]');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const detailsField = form.querySelector('[name="details"]');
+    if (detailsField && buildDetails) detailsField.value = buildDetails();
+
+    const payload = Object.fromEntries(new FormData(form).entries());
+    note.textContent = 'Sending you a verification code…';
+
+    fetch(`${VERIFY_WORKER_URL}/request-code`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.ok) throw new Error(data.error || 'Could not send code');
+        note.textContent = `We've emailed a code to ${emailField.value}. Enter it below to confirm.`;
+        stage1.hidden = true;
+        stage2.hidden = false;
+        codeInput.focus();
+      })
+      .catch((err) => {
+        note.textContent = err.message || 'Something went wrong — please try again.';
+      });
+  });
+
+  verifyBtn.addEventListener('click', () => {
+    const code = codeInput.value.trim();
+    if (!code) return;
+    note.textContent = 'Checking…';
+
+    fetch(`${VERIFY_WORKER_URL}/verify-code`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: emailField.value, code })
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.ok) throw new Error(data.error || 'Incorrect code');
+        note.textContent = "Thanks — you're confirmed! We've received this.";
+        stage2.hidden = true;
+        form.reset();
+      })
+      .catch((err) => {
+        note.textContent = err.message || 'Incorrect code — please try again.';
+      });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   AOS.init({
     duration: 600,
@@ -80,33 +141,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Registration form — register.html only
   const form = document.getElementById('contactForm');
-  const reasonSelect = document.getElementById('reason');
-  const attendeeFields = document.getElementById('attendeeFields');
-  const attendeeFields2 = document.getElementById('attendeeFields2');
-  const sponsorFields = document.getElementById('sponsorFields');
+  if (form) {
+    wireEmailForm({
+      form,
+      note: document.getElementById('formNote'),
+      stage1: document.getElementById('registerStage1'),
+      stage2: document.getElementById('registerStage2'),
+      codeInput: document.getElementById('registerCode'),
+      verifyBtn: document.getElementById('registerVerifyBtn'),
+      buildDetails: () => {
+        const school = document.getElementById('school')?.value || '—';
+        const count = document.getElementById('attendeeCount')?.value || '—';
+        return `School/group: ${school} | Attendees: ${count}`;
+      }
+    });
+  }
 
-  if (form && reasonSelect && attendeeFields && attendeeFields2 && sponsorFields) {
-    function syncReasonFields() {
-      const isSponsor = reasonSelect.value === 'sponsor';
-      attendeeFields.hidden = isSponsor;
-      attendeeFields2.hidden = isSponsor;
-      sponsorFields.hidden = !isSponsor;
-    }
-
-    // Deep link from the sponsor page: register.html?as=sponsor preselects the reason
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('as') === 'sponsor') {
-      reasonSelect.value = 'sponsor';
-    }
-    syncReasonFields();
-    reasonSelect.addEventListener('change', syncReasonFields);
-
-    const note = document.getElementById('formNote');
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      note.textContent = "Thanks — this is a placeholder confirmation. Hook this form up to an email service or backend to actually receive messages.";
-      form.reset();
-      syncReasonFields();
+  // Sponsorship inquiry form — sponsor.html only
+  const sponsorForm = document.getElementById('sponsorForm');
+  if (sponsorForm) {
+    wireEmailForm({
+      form: sponsorForm,
+      note: document.getElementById('sponsorFormNote'),
+      stage1: document.getElementById('sponsorStage1'),
+      stage2: document.getElementById('sponsorStage2'),
+      codeInput: document.getElementById('sponsorCode'),
+      verifyBtn: document.getElementById('sponsorVerifyBtn'),
+      buildDetails: () => {
+        const company = document.getElementById('company')?.value || '—';
+        const tier = document.getElementById('tier')?.value || 'not sure yet';
+        return `Company: ${company} | Tier: ${tier}`;
+      }
     });
   }
 });

@@ -369,6 +369,31 @@ ul { list-style: none; }
   max-width: 640px;
 }
 
+/* ---------- Legal pages (privacy / terms) ---------- */
+.legal-content { max-width: 720px; }
+.legal-content h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 2.25rem 0 0.75rem;
+}
+.legal-content h2:first-of-type { margin-top: 0; }
+.legal-content p { color: var(--color-text-dim); margin-bottom: 1rem; }
+.legal-content ul { margin: 0 0 1rem; padding-left: 0; }
+.legal-content ul li {
+  color: var(--color-text-dim);
+  padding-left: 1.4rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+.legal-content ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--color-text-faint);
+}
+.legal-content strong { color: var(--color-text); }
+
 .section-lead {
   color: var(--color-text-dim);
   max-width: 560px;
@@ -880,7 +905,9 @@ ul { list-style: none; }
   gap: 0.6rem;
 }
 .footer-logo { font-size: 1.1rem; justify-content: center; }
-.footer-tag, .footer-copy { color: var(--color-text-faint); font-size: 0.85rem; }
+.footer-tag, .footer-copy, .footer-legal { color: var(--color-text-faint); font-size: 0.85rem; }
+.footer-legal .text-link { color: var(--color-text-faint); }
+.footer-legal .text-link:hover { color: var(--color-text); }
 .footer-ig {
   color: var(--color-accent);
   font-weight: 600;

@@ -30,17 +30,16 @@
 <!-- ============ NAV ============ -->
 <header class="site-header">
   <div class="container nav-inner">
-    <a href="index.html" class="logo">
+    <!-- prod: swap for the deployed immersive site's real URL -->
+    <a href="https://yilmaz-islam.github.io/accord-vi/" class="logo">
       <svg class="logo-mark" viewBox="0 0 120 120" aria-hidden="true"><use href="#resonance-mark"></use></svg>
       <span class="logo-text">Accord <span>VI</span></span>
     </a>
 
     <nav class="nav-links" id="navLinks">
-      <a href="index.html#about" class="nav-link">About</a>
+      <a href="info.html" class="nav-link">Info</a>
       <a href="sponsor.html" class="nav-link">Sponsors</a>
-      <a href="index.html#gallery" class="nav-link">Gallery</a>
-      <a href="index.html#schedule" class="nav-link">Schedule</a>
-      <a href="index.html#faq" class="nav-link">FAQ</a>
+      <a href="privacy-policy.html" class="nav-link">Privacy</a>
       <a href="register.html" class="nav-cta">Register</a>
     </nav>
 
@@ -186,9 +185,81 @@
         <h3>Interested in sponsoring Accord VI?</h3>
         <p>Tell us a bit about your brand and we'll follow up with a full sponsorship deck.</p>
       </div>
-      <a href="register.html?as=sponsor" class="btn btn-primary">Become a Sponsor</a>
+      <a href="#sponsor-form" class="btn btn-primary">Become a Sponsor</a>
     </div>
 
+  </div>
+</section>
+
+<!-- ============ SPONSOR FORM ============ -->
+<section id="sponsor-form" class="section section-alt">
+  <div class="container contact-grid">
+    <div class="contact-copy" data-aos="fade-right">
+      <p class="section-kicker">Become a sponsor</p>
+      <h2 class="section-title">Tell us about your brand</h2>
+      <p class="section-lead">
+        Pick a tier above, or tell us what you have in mind — fill in the form and we'll
+        follow up with a full sponsorship deck.
+      </p>
+
+      <ul class="contact-details">
+        <li>
+          <span class="contact-label">Email</span>
+          <a href="mailto:hello@accordvi.example" class="contact-value">hello@accordvi.example</a>
+          <span class="ph-tag">placeholder</span>
+        </li>
+        <li>
+          <span class="contact-label">Venue</span>
+          <span class="contact-value">Beaconhouse Cantt Campus, Multan</span>
+        </li>
+      </ul>
+
+      <p class="section-lead">Looking to attend instead? Head to our <a href="register.html" class="text-link">registration page →</a></p>
+    </div>
+
+    <form class="contact-form" id="sponsorForm" data-aos="fade-left">
+      <input type="hidden" name="form_type" value="Sponsorship Inquiry">
+      <input type="hidden" name="details" id="sponsorDetails">
+      <div id="sponsorStage1">
+        <div class="form-row">
+          <label for="sponsorName">Name</label>
+          <input type="text" id="sponsorName" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-row">
+          <label for="sponsorEmail">Email</label>
+          <input type="email" id="sponsorEmail" name="email" required placeholder="you@example.com">
+        </div>
+        <div class="form-row">
+          <label for="company">Company / Brand name</label>
+          <input type="text" id="company" name="company" required placeholder="e.g. Acme Inc.">
+        </div>
+        <div class="form-row">
+          <label for="tier">Tier you're interested in</label>
+          <select id="tier" name="tier">
+            <option value="">Not sure yet</option>
+            <option value="bronze">Bronze — PKR 150,000</option>
+            <option value="silver">Silver — PKR 250,000</option>
+            <option value="gold">Gold — PKR 350,000</option>
+            <option value="diamond">Diamond — PKR 500,000</option>
+            <option value="platinum">Platinum — PKR 750,000</option>
+            <option value="custom">Custom / à la carte</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="sponsorMessage">Message</label>
+          <textarea id="sponsorMessage" name="message" rows="4" placeholder="Tell us a little about your brand and what you're looking for"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send verification code</button>
+      </div>
+      <div id="sponsorStage2" hidden>
+        <div class="form-row">
+          <label for="sponsorCode">Enter the 6-digit code we emailed you</label>
+          <input type="text" id="sponsorCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456">
+        </div>
+        <button type="button" id="sponsorVerifyBtn" class="btn btn-primary btn-block">Verify &amp; submit</button>
+      </div>
+      <p class="form-note" id="sponsorFormNote" role="status"></p>
+    </form>
   </div>
 </section>
 
@@ -201,6 +272,7 @@
     </span>
     <p class="footer-tag">18–19 October · Beaconhouse Cantt Campus, Multan</p>
     <a href="https://instagram.com/" target="_blank" rel="noopener" class="footer-ig">Instagram</a>
+    <p class="footer-legal"><a href="privacy-policy.html" class="text-link">Privacy Policy</a> · <a href="terms.html" class="text-link">Terms</a></p>
     <p class="footer-copy">© <span id="year"></span> Accord VI. All rights reserved.</p>
   </div>
 </footer>
