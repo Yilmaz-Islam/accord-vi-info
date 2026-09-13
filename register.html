@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register — Accord VI, 18–19 October, Multan</title>
+<meta name="description" content="Register for Accord VI: Live Concert on 18 October and Qawwali Night on 19 October at Beaconhouse Cantt Campus, Multan.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="resonance-mark" viewBox="0 0 120 120">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+      <line x1="60" y1="8" x2="60" y2="112"></line>
+      <path d="M66.8,41.2 A20,20 0 0 1 66.8,78.8"></path>
+      <path d="M53.2,41.2 A20,20 0 0 0 53.2,78.8"></path>
+      <path d="M71.6,28.1 A34,34 0 0 1 71.6,91.9"></path>
+      <path d="M48.4,28.1 A34,34 0 0 0 48.4,91.9"></path>
+      <path d="M76.4,14.9 A48,48 0 0 1 76.4,105.1"></path>
+      <path d="M43.6,14.9 A48,48 0 0 0 43.6,105.1"></path>
+    </g>
+    <circle cx="60" cy="60" r="4" fill="currentColor"></circle>
+  </symbol>
+</svg>
+
+<!-- ============ NAV ============ -->
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <svg class="logo-mark" viewBox="0 0 120 120" aria-hidden="true"><use href="#resonance-mark"></use></svg>
+      <span class="logo-text">Accord <span>VI</span></span>
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html#about" class="nav-link">About</a>
+      <a href="sponsor.html" class="nav-link">Sponsors</a>
+      <a href="index.html#gallery" class="nav-link">Gallery</a>
+      <a href="index.html#schedule" class="nav-link">Schedule</a>
+      <a href="index.html#faq" class="nav-link">FAQ</a>
+      <a href="register.html" class="nav-cta">Register</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="container page-hero-inner">
+    <div class="hero-mark" aria-hidden="true" data-aos="zoom-in">
+      <svg class="logo-mark logo-mark-hero" viewBox="0 0 120 120"><use href="#resonance-mark"></use></svg>
+    </div>
+    <p class="eyebrow" data-aos="fade-up" data-aos-delay="100">Two nights · 18–19 October</p>
+    <h1 class="page-title" data-aos="fade-up" data-aos-delay="200">Register for Accord VI</h1>
+    <p class="hero-tagline" data-aos="fade-up" data-aos-delay="300">
+      Live Concert on 18 October, Qawwali Night on 19 October — Beaconhouse Cantt Campus, Multan.
+    </p>
+
+    <div class="countdown" id="countdown" aria-label="Time remaining until Accord VI" data-aos="fade-up" data-aos-delay="400">
+      <div class="countdown-box"><span class="countdown-num" id="cdDays">--</span><span class="countdown-label">Days</span></div>
+      <div class="countdown-box"><span class="countdown-num" id="cdHours">--</span><span class="countdown-label">Hours</span></div>
+      <div class="countdown-box"><span class="countdown-num" id="cdMins">--</span><span class="countdown-label">Mins</span></div>
+      <div class="countdown-box"><span class="countdown-num" id="cdSecs">--</span><span class="countdown-label">Secs</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REGISTRATION FORM ============ -->
+<section class="section section-alt">
+  <div class="container contact-grid">
+    <div class="contact-copy" data-aos="fade-right">
+      <p class="section-kicker">Register</p>
+      <h2 class="section-title">Tell us you're coming</h2>
+      <p class="section-lead">
+        Whether you're a student wanting in, a parent with questions, or a brand looking to
+        sponsor — fill in the form and we'll get back to you.
+      </p>
+
+      <ul class="contact-details">
+        <li>
+          <span class="contact-label">Email</span>
+          <a href="mailto:hello@accordvi.example" class="contact-value">hello@accordvi.example</a>
+          <span class="ph-tag">placeholder</span>
+        </li>
+        <li>
+          <span class="contact-label">Instagram</span>
+          <a href="https://instagram.com/" target="_blank" rel="noopener" class="contact-value">@accord.vi</a>
+          <span class="ph-tag">placeholder</span>
+        </li>
+        <li>
+          <span class="contact-label">Venue</span>
+          <span class="contact-value">Beaconhouse Cantt Campus, Multan</span>
+        </li>
+      </ul>
+
+      <p class="section-lead">Looking to partner with Accord VI instead? See <a href="sponsor.html" class="text-link">sponsorship tiers →</a></p>
+    </div>
+
+    <form class="contact-form" id="contactForm" data-aos="fade-left">
+      <div class="form-row">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required placeholder="Your name">
+      </div>
+      <div class="form-row">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="you@example.com">
+      </div>
+      <div class="form-row">
+        <label for="reason">I'm reaching out as a...</label>
+        <select id="reason" name="reason">
+          <option value="attendee">Prospective attendee</option>
+          <option value="sponsor">Potential sponsor</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-row form-row-conditional" id="attendeeFields">
+        <label for="school">School / Group name</label>
+        <input type="text" id="school" name="school" placeholder="e.g. Beaconhouse Cantt Campus">
+      </div>
+      <div class="form-row form-row-conditional" id="attendeeFields2">
+        <label for="attendeeCount">Number of people attending</label>
+        <input type="number" id="attendeeCount" name="attendeeCount" min="1" placeholder="e.g. 1">
+      </div>
+
+      <div class="form-row form-row-conditional" id="sponsorFields" hidden>
+        <label for="company">Company / Brand name</label>
+        <input type="text" id="company" name="company" placeholder="e.g. Acme Inc.">
+      </div>
+
+      <div class="form-row">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4" placeholder="Tell us a little about why you're reaching out"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Submit registration</button>
+      <p class="form-note" id="formNote" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span class="logo footer-logo">
+      <svg class="logo-mark" viewBox="0 0 120 120" aria-hidden="true"><use href="#resonance-mark"></use></svg>
+      <span class="logo-text">Accord <span>VI</span></span>
+    </span>
+    <p class="footer-tag">18–19 October · Beaconhouse Cantt Campus, Multan</p>
+    <a href="https://instagram.com/" target="_blank" rel="noopener" class="footer-ig">Instagram</a>
+    <p class="footer-copy">© <span id="year"></span> Accord VI. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
